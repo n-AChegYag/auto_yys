@@ -63,6 +63,21 @@ class TuPoRound(YysRound):
             re_running = player.find_touch_any(self.list_running, False)
             if re_running == 'running':
                 break
+            
+    def round_end(self):
+        while True:
+            re_end_1 = player.find_touch_any(self.list_end_1, True)
+            re_end_2 = player.find_touch_any(self.list_end_2, True)
+            if re_end_2:
+                time.sleep(0.4)
+            re_end_3 = player.find_touch_any(self.list_end_3, True)
+            if re_end_3:
+                time.sleep(0.4)
+                break
+            re_fail = player.find_touch_any(self.list_end_fail, True)
+            if re_fail:
+                time.sleep(0.2)
+                break
 
 
 class YuHun(YysRound):
@@ -70,7 +85,7 @@ class YuHun(YysRound):
     def __init__(
         self, 
         single_flag=False,
-        list_start_single = ['start_1', 'huntu_1', 'huntu_2', 'yeyuanhuo'],
+        list_start_single = ['start_1', 'huntu_1', 'huntu_2', 'yeyuanhuo', 'hai'],
         list_start_team = ['huntuzudui'],
         list_invite = ['autoinvite'],
         list_yes = ['yes'],
@@ -92,17 +107,17 @@ class YuHun(YysRound):
         if self.single_flag:
             re_invite = player.find_touch_any(self.list_invite, True, False)
             if re_invite:
-                time.sleep(0.2)
+                time.sleep(0.1)
             re_yes = player.find_touch_any(self.list_yes, True)
             if re_yes:
-                time.sleep(0.2)
+                time.sleep(0.1)
         else:
             re_tick_1 = player.find_touch_any(self.list_tick_1, True, False)
             if re_tick_1:
-                time.sleep(0.3)
+                time.sleep(0.2)
             re_tick_2 = player.find_touch_any(self.list_tick_2, True)
             if re_tick_2:
-                time.sleep(0.3)
+                time.sleep(0.2)
 
 
 class TanSuoRound(YysRound):
@@ -138,7 +153,7 @@ class TanSuoRound(YysRound):
             re_start = player.find_touch_any(self.list_start, False)
             if re_start == None and re_running == None:
                 re_ground = player.find_touch_any(self.list_ground, True)
-                time.sleep(1)
+                time.sleep(0.4)
         return last_flag
 
     def round_end(self):
@@ -146,7 +161,7 @@ class TanSuoRound(YysRound):
             re_end_1 = player.find_touch_any(self.list_end_1, True)
             re_end_2 = player.find_touch_any(self.list_end_2, True)
             if re_end_2:
-                time.sleep(0.8)
+                time.sleep(0.5)
             re_end_3 = player.find_touch_any(self.list_end_3, True)
             if re_end_3:
                 time.sleep(0.2)
@@ -184,7 +199,7 @@ class YuLingRound(YysRound):
         ):
         super().__init__()
         self.list_start = list_start
-
+        
 
 class HuoDongRound(YysRound):
 
@@ -196,24 +211,24 @@ class HuoDongRound(YysRound):
         self.list_start = list_start
 
 
-def huntu_single(round=99):
+def huntu_single(round=32):
     huntu_round = YuHun(single_flag=True)
     for i in range(round):
         print('Round {}'.format(i+1))
         huntu_round.round_start()
-        time.sleep(10)
+        time.sleep(16)
         huntu_round.round_end()
-        huntu_round.if_fail()
+        # huntu_round.if_fail()
 
 
-def huntu_team(round=99):
+def huntu_team(round=120):
     huntu_round = YuHun(single_flag=False)
     for i in range(round):
         print('Round {}'.format(i+1))
         huntu_round.round_start()
-        time.sleep(10)
+        time.sleep(17)
         huntu_round.round_end()
-        huntu_round.if_fail()
+        # huntu_round.if_fail()
 
 
 def yeyuanhuo(round=30):
@@ -221,7 +236,7 @@ def yeyuanhuo(round=30):
     for i in range(round):
         print('Round {}'.format(i+1))
         yeyuanhuo_round.round_start()
-        time.sleep(18)
+        time.sleep(17)
         yeyuanhuo_round.round_end()
 
 
@@ -252,16 +267,25 @@ def yuling(round=100):
     for i in range(round):
         print('Round {}'.format(i+1))
         yuling_round.round_start()
-        time.sleep(2)
+        time.sleep(6)
         yuling_round.round_end()
+        
+        
+def hunshui(round=30):
+    hunshui_round = YuHun(single_flag=True)
+    for i in range(round):
+        print('Round {}'.format(i+1))
+        hunshui_round.round_start()
+        time.sleep(39)
+        hunshui_round.round_end()
 
 
-def huodong_single(round=9):
+def huodong_single(round=20):
     huodong_round = HuoDongRound()
     for i in range(round):
         print('Round {}'.format(i+1))
         huodong_round.round_start()
-        time.sleep(5)
+        time.sleep(60)
         huodong_round.round_end()
 
 
@@ -279,6 +303,7 @@ def menu(debug=False):
         [tupo,              '自动结界突破'],
         [tansuo_single,     '自动困28[单人]'],
         [yuling,            '自动御灵'],
+        [hunshui,           '自动永生之海'],
         [huodong_single,    '自动挂机活动'],
     ]
 
